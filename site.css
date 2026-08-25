@@ -551,8 +551,8 @@ button {
 /* Намеренно без карточек и иконок: сетка одинаковых плиток с достоинствами
    читается как рекламный буклет. Здесь простые строки через волосяную
    линию — так это выглядит как заметки, а не как посадочная страница.
-   Оговорка у каждого пункта — не украшение, а то, что отличает разговор
-   владельца от рекламы. */
+   От рекламы текст отличает конкретность: не «высокая технологичность»,
+   а «телефон подключается один раз». Общих слов тут быть не должно. */
 .why {
   padding: clamp(28px, 3.4vw, 40px) var(--pad);
   border-top: 1px solid var(--hair);
@@ -584,22 +584,11 @@ button {
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.why__body { display: flex; flex-direction: column; gap: 10px; }
 .why__text {
   font-size: 15px;
   line-height: 1.6;
   color: var(--muted);
   text-wrap: pretty;
-}
-.why__catch {
-  font-size: 14px;
-  line-height: 1.55;
-  color: var(--muted-3);
-  text-wrap: pretty;
-}
-.why__catch span {
-  font-weight: 700;
-  color: var(--red);
 }
 
 /* ─── нумерованные блоки ────────────────────────────────────────────── */
