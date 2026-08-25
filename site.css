@@ -923,8 +923,16 @@ button {
   gap: 24px;
   padding-bottom: 24px;
 }
+.site-footer__lead {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  max-width: 42ch;
+  text-wrap: pretty;
+}
 .site-footer__note {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 13px;
   line-height: 1.55;
   color: var(--muted-3);
