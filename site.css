@@ -191,29 +191,40 @@ button {
   padding: 20px var(--pad) 0;
 }
 
+/* Знак и две строки названия — одним блоком. В строку они не встают:
+   три разных кегля на одной базовой линии читаются как три отдельные
+   надписи, а не как логотип. */
 .logo {
-  display: flex;
+  /* inline-grid, а не grid: в подвале логотип лежит в блочном <p>,
+     и обычная сетка растянула бы колонки на всю ширину колонки подвала */
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  column-gap: 9px;
   align-items: center;
-  gap: 9px;
+  justify-content: start;
   color: var(--ink);
 }
 .logo:hover { color: var(--ink); }
-/* знак — тот же дефлектор, что у номеров блоков и фактурой на карточках */
-.logo__mark { color: var(--red); flex: 0 0 auto; }
+.logo__mark {
+  grid-row: 1 / 3;
+  color: var(--red);
+}
 .logo__word {
-  font-size: 21px;
+  grid-column: 2;
+  font-size: 19px;
   font-weight: 800;
+  line-height: 1.05;
   letter-spacing: -0.03em;
 }
 .logo__sub {
-  font-size: 11px;
+  grid-column: 2;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: 0.08em;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted-3);
 }
-.logo--footer { align-items: baseline; }
-.logo--footer .logo__mark { align-self: center; }
 
 .nav {
   display: flex;
@@ -535,6 +546,61 @@ button {
   line-height: 1;
 }
 .spec__note { font-size: 12px; line-height: 1.35; color: var(--muted-4); }
+
+/* ─── почему мы на ней ездим ────────────────────────────────────────── */
+/* Намеренно без карточек и иконок: сетка одинаковых плиток с достоинствами
+   читается как рекламный буклет. Здесь простые строки через волосяную
+   линию — так это выглядит как заметки, а не как посадочная страница.
+   Оговорка у каждого пункта — не украшение, а то, что отличает разговор
+   владельца от рекламы. */
+.why {
+  padding: clamp(28px, 3.4vw, 40px) var(--pad);
+  border-top: 1px solid var(--hair);
+}
+.why__head { max-width: 60ch; }
+.why__title {
+  margin-top: 12px;
+  font-size: clamp(24px, 2.8vw, 32px);
+  font-weight: 800;
+}
+.why__lead {
+  margin-top: 12px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.why__list { margin-top: clamp(18px, 2.4vw, 28px); }
+.why__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.7fr);
+  gap: 8px 32px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line-soft);
+}
+.why__claim {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.why__body { display: flex; flex-direction: column; gap: 10px; }
+.why__text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.why__catch {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted-3);
+  text-wrap: pretty;
+}
+.why__catch span {
+  font-weight: 700;
+  color: var(--red);
+}
 
 /* ─── нумерованные блоки ────────────────────────────────────────────── */
 .block {
@@ -1011,7 +1077,38 @@ button {
   .cats::-webkit-scrollbar { display: none; }
   .cats .pill { width: auto; }
   .highlights__head { padding-bottom: 16px; }
-  
+
+  .why__item { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+
+  .block,
+  .block--wide {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 0 var(--pad);
+  }
+  .block__num {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 14px;
+    padding: 28px 0 0;
+    font-size: 34px;
+  }
+  .block__text { padding: 20px 0 32px; }
+  .block__media { grid-column: 1; padding: 0 0 32px; }
+  .photo--drive { aspect-ratio: 16 / 10; }
+
+  .gallery { grid-template-columns: minmax(0, 1fr); }
+  .gallery__thumbs { flex-direction: row; }
+  .thumb { min-height: 0; aspect-ratio: 3 / 2; }
+
+  .trims { grid-template-columns: minmax(0, 1fr); }
+
+  .acc-hero { grid-template-columns: minmax(0, 1fr); }
+  .acc__grid { grid-template-columns: minmax(0, 1fr); }
+  .chats { grid-template-columns: minmax(0, 1fr); }
+  .site-footer__cols { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+}
+
 /* ─── меньше 620: подписи точек прячем, остаются метки ──────────────── */
 @media (max-width: 619px) {
   /* Подписи остаются и на телефоне: списка под пилюлями больше нет,
