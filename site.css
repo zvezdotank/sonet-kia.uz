@@ -310,22 +310,6 @@ button {
   align-items: start;
 }
 
-.conf__aside {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.model__name {
-  font-size: clamp(30px, 3.4vw, 40px);
-  font-weight: 800;
-  letter-spacing: -0.04em;
-}
-.model__year {
-  margin-top: 4px;
-  font-size: 14px;
-  color: var(--muted-3);
-}
 
 
 .cats {
@@ -333,6 +317,7 @@ button {
   flex-direction: column;
   gap: 8px;
   align-items: flex-start;
+  align-self: center;
 }
 .cats .pill { width: 100%; text-align: center; }
 
@@ -926,6 +911,78 @@ button {
   color: var(--muted-2);
   max-width: 62ch;
   text-wrap: pretty;
+}
+
+/* ─── таблица сравнения ─────────────────────────────────────────────── */
+/* Широкую таблицу на телефоне не свернуть без потери смысла — её надо
+   читать колонками. Поэтому прокрутка внутри контейнера, а не у страницы. */
+.tablewrap {
+  overflow-x: auto;
+  margin: 0 calc(-1 * var(--pad));
+  padding: 0 var(--pad);
+}
+.cmp {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.cmp th,
+.cmp td {
+  padding: 12px 14px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line-soft);
+}
+.cmp thead th {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+.cmp tbody th {
+  font-weight: 600;
+  color: var(--muted-3);
+  white-space: nowrap;
+}
+.cmp td { color: var(--muted); }
+/* своя колонка выделена фоном, а не цветом текста: так видно, что это
+   наша машина, но чужие цифры не выглядят приглушёнными */
+.cmp .cmp__own { background: var(--fill); color: var(--ink); font-weight: 600; }
+.cmp thead .cmp__own { color: var(--ink); }
+.cmp__hide {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+/* ─── откуда цифры ──────────────────────────────────────────────────── */
+.src {
+  padding: clamp(24px, 3vw, 34px) var(--pad) clamp(28px, 3.4vw, 40px);
+  border-top: 1px solid var(--hair);
+}
+.src__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--muted-3);
+}
+.src__list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 78ch;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted-2);
+}
+.src__note {
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--muted-4);
 }
 
 /* ─── чаты в Telegram ───────────────────────────────────────────────── */
