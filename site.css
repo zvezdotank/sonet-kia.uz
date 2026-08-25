@@ -183,29 +183,6 @@ button {
   color: var(--red);
 }
 
-/* ─── строка чатов над шапкой ───────────────────────────────────────── */
-.topbar {
-  display: flex;
-  align-items: center;
-  gap: 8px 16px;
-  flex-wrap: wrap;
-  padding: 9px var(--pad);
-  background: var(--fill);
-  border-bottom: 1px solid var(--line);
-  font-size: 13px;
-}
-.topbar[hidden] { display: none; }
-.topbar__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-weight: 700;
-  color: var(--muted-3);
-}
-.topbar__links { display: flex; gap: 6px 14px; flex-wrap: wrap; }
-.topbar__chat { font-weight: 600; color: var(--muted); }
-.topbar__chat:hover { color: var(--red); }
-
 /* ─── шапка ─────────────────────────────────────────────────────────── */
 .site-header {
   display: flex;
@@ -264,6 +241,24 @@ button {
 }
 .pill[aria-pressed='true']:hover,
 .pill.is-current:hover { color: var(--card); }
+
+/* Чаты стоят в том же ряду, что и разделы, но это внешние ссылки —
+   отделяем их чертой и приглушаем. */
+.nav__sep {
+  width: 1px;
+  align-self: stretch;
+  margin: 4px 4px;
+  background: var(--line);
+}
+.nav__sep[hidden] { display: none; }
+.pill--chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  border-style: dashed;
+  color: var(--muted-3);
+}
+.pill--chat:hover { border-style: solid; color: var(--red); }
 
 .header-actions {
   margin-left: auto;
@@ -1118,6 +1113,8 @@ button {
   }
   .nav.is-open { display: flex; }
   .nav .pill { text-align: center; }
+  /* в столбик вертикальная черта не читается — кладём её горизонтально */
+  .nav__sep { width: auto; height: 1px; align-self: auto; margin: 4px 0; }
 
   .conf {
     grid-template-columns: minmax(0, 1fr);

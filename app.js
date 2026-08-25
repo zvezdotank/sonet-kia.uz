@@ -346,16 +346,22 @@
      ссылка в никуда хуже, чем её отсутствие. */
   var chats = (window.SONET && window.SONET.chats) || [];
   if (chats.length) {
-    /* строка над шапкой: быстрый доступ, без пояснений */
-    var top = $('#topbarLinks');
-    top.innerHTML = chats.map(function () {
-      return '<a class="topbar__chat" target="_blank" rel="noopener"></a>';
-    }).join('');
-    $$('.topbar__chat', top).forEach(function (a, i) {
+    /* чаты — в том же ряду, что и разделы сайта: отдельной полосой они
+       читались как чужой элемент над шапкой */
+    var sep = $('#navChats');
+    var TG = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" ' +
+      'stroke="currentColor" stroke-width="1.9" stroke-linecap="round" ' +
+      'stroke-linejoin="round" aria-hidden="true">' +
+      '<path d="m21 4-3 16-6-4-3 4-1-6 13-10Z"/><path d="m8 14 13-10"/></svg>';
+    sep.insertAdjacentHTML('afterend', chats.map(function () {
+      return '<a class="pill pill--chat" target="_blank" rel="noopener">' + TG +
+             '<span></span></a>';
+    }).join(''));
+    $$('.pill--chat').forEach(function (a, i) {
       a.href = chats[i].url;
-      a.textContent = chats[i].note || chats[i].name;
+      a.querySelector('span').textContent = chats[i].note || chats[i].name;
     });
-    $('#topbar').hidden = false;
+    sep.hidden = false;
 
     var box = $('#chatsLinks');
     box.innerHTML = chats.map(function () {
