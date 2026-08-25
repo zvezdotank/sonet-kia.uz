@@ -327,19 +327,19 @@ button {
 
 
 /* сцена с автомобилем */
+/* Кадр с машиной уже сцены: по бокам остаются поля, куда уходят подписи
+   выносок. Так кузов не закрыт и картинке достаётся вся ширина кадра. */
 .stage {
   position: relative;
-  display: grid;
-  place-items: center;
   min-width: 0;
+  --gutter: 16%;
 }
 
 .stage__frame {
   position: relative;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  border-radius: var(--r-media);
-  overflow: hidden;
+  width: calc(100% - 2 * var(--gutter));
+  margin-inline: auto;
+  aspect-ratio: 955 / 589;
 }
 .stage__pic {
   position: absolute;
@@ -958,6 +958,9 @@ button {
   .conf {
     grid-template-columns: 205px minmax(0, 1fr);
   }
+  /* поля под подписи есть только на широком экране: ниже они всё равно
+     не вместят подпись, и выноски снова ложатся поверх кадра */
+  .stage { --gutter: 0px; }
   .acc__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .specs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .block,

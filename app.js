@@ -9,13 +9,14 @@
 (function () {
   'use strict';
 
-  /* Координаты деталей на img/car-white-*, в процентах от кадра.
-     Раньше цветов было пять и у каждого был свой набор — переключатель
-     цвета убрали, таблицы остальных лежат в истории (коммит 3d21241). */
+  /* Координаты деталей на img/car-white-*, в процентах от кадра с машиной.
+     Сняты по обрезанному кадру 955×589 — если менять обрезку в make_img.py,
+     координаты надо пересчитать. Раньше цветов было пять и у каждого был
+     свой набор, таблицы остальных лежат в истории (коммит 3d21241). */
   var ANCHORS = {
-    hood:   [34, 41], grille: [29, 51], lamp: [43, 48],
-    glass:  [45, 31], door:   [61, 35], roof: [57, 19],
-    wheel:  [53, 65], sill:   [64, 61], rear: [69, 40]
+    hood:   [28, 37], grille: [19, 53], lamp: [43, 48],
+    glass:  [46, 22], door:   [73, 28], roof: [66,  4],
+    wheel:  [60, 74], sill:   [78, 68], rear: [86, 36]
   };
 
   /* Рубрики по порядку пилюль в разметке. Каждый плюс: деталь машины
@@ -73,6 +74,7 @@
   var frame = $('#stageFrame');
   if (frame) {
 
+  var stage = $('#stage');
   var spotsBox = $('#spots');
   var cat = 1;                        // Дизайн — как в макете
   var spot = 0;
@@ -82,9 +84,17 @@
   function pts() { return CATS[cat].pts; }
 
   function layout() {
-    var W = frame.clientWidth;
-    var H = frame.clientHeight;
-    if (!W || !H) return;
+    /* Точки считаем по кадру с машиной, а подписи ставим по краям сцены:
+       на широком экране кадр уже сцены, и подписи уходят в поля по бокам,
+       не закрывая кузов. На узком поля схлопываются в ноль (см. --gutter
+       в site.css) и подписи снова ложатся поверх кадра. */
+    var W = stage.clientWidth;
+    var H = stage.clientHeight;
+    var fw = frame.clientWidth;
+    var fh = frame.clientHeight;
+    var ox = frame.offsetLeft;
+    var oy = frame.offsetTop;
+    if (!W || !H || !fw || !fh) return;
 
     var pins = $$('.pin', spotsBox);
     var calls = $$('.callout', spotsBox);
@@ -93,8 +103,9 @@
        переносятся на две строки, и фиксированный просвет их не разводит. */
     var items = pts().map(function (p, i) {
       var a = ANCHORS[p.at];
-      return { i: i, x: a[0] / 100 * W, y: a[1] / 100 * H,
-               left: a[0] < 50, h: calls[i].offsetHeight };
+      var x = ox + a[0] / 100 * fw;
+      return { i: i, x: x, y: oy + a[1] / 100 * fh,
+               left: x < W / 2, h: calls[i].offsetHeight };
     });
 
     [true, false].forEach(function (isLeft) {
@@ -188,7 +199,7 @@
   renderCat();
 
   /* Кадр меняет ширину вместе с окном — пересчитываем раскладку подписей. */
-  if ('ResizeObserver' in window) new ResizeObserver(layout).observe(frame);
+  if ('ResizeObserver' in window) new ResizeObserver(layout).observe(stage);
   else window.addEventListener('resize', layout);
 
   }   /* конец конфигуратора */
